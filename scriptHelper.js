@@ -17,11 +17,49 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
 }
 
 function validateInput(testInput) {
-   
+    if (testInput === '') {
+        return 'Empty';
+    } else if (isNan(testInput)) {
+        return 'Not a Number';
+    } else if (typeof testInput === 'number') {
+        return 'Is a Number';
+    }
 }
 
-function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-   
+function formSubmission(document, list, pilot, copilot, fuelLevel, cargoMass) {
+    const form = document.getElementById('launchForm');
+    form.addEventListener('submit', function(event) {
+        const pilot = document.getElementById('pilotName');
+        const copilot = document.getElementById('copilotName');
+        const fuelLevel = document.getElementById('fuelLevel');
+        const cargoMass = document.getElementById('cargoMass');
+
+        if (validateInput(pilot.value) === 'Empty' || validateInput(pilot.value) === 'Is a Number') {
+            alert('Pilot Name is required. No symbols or numbers.');
+            event.preventDefault();
+        }
+
+        if (validateInput(copilot.value) === 'Empty' || validateInput(copilot.value) === 'Is a Number') {
+            alert('Co-Pilot Name is required. No symbols or numbers.');
+            event.preventDefault();
+        }
+
+        if (validateInput(fuelLevel.value) === 'Empty' || validateInput(fuelLevel.value) === 'Not a Number') {
+            alert('Fuel Level is required. Must be a number.');
+            event.preventDefault();
+        }
+
+        if (validateInput(cargoMass.value) === 'Empty' || validateInput(cargoMass.value) === 'Not a Number') {
+            alert('Cargo Mass is required. Must be a number.');
+            event.preventDefault();
+        }
+        // const errorElement = document.getElementById('error');
+        // let errMess = [];
+        // if (errMess.length > 0) {
+        //    event.preventDefault()
+        //    errorElement.innerText = errMess.join(',  ')
+        // }
+    });
 }
 
 async function myFetch() {
